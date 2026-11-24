@@ -360,6 +360,12 @@ export default function Signup() {
           <button type="button" className="auth-button auth-button-secondary tos-review-button" onClick={() => setTosModalOpen(true)}>
             Review changes
           </button>
+        <div className="auth-strength" aria-label="Password strength preview">
+          <span className="auth-strength-bar auth-strength-bar-active" />
+          <span className="auth-strength-bar auth-strength-bar-active" />
+          <span className="auth-strength-bar auth-strength-bar-active" />
+          <span className="auth-strength-bar" />
+          <p className="auth-strength-copy">Strong enough for a production workspace</p>
         </div>
 
         {hasAcknowledgedCurrentTerms && (
@@ -380,3 +386,4 @@ export default function Signup() {
     </AuthShell>
   );
 }
+

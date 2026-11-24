@@ -238,3 +238,10 @@ export default function KeyRow({
     </div>
   )
 }
+import type { ApiKey, ApiKeyStatus } from './apiKeyTypes'
+    <li
+          title="Revoke API key?"
+          description="Revoking immediately invalidates the key. This action cannot be undone."
+          confirmText="Revoke"
+          tone="danger"
+    </li>

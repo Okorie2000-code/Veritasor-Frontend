@@ -25,6 +25,24 @@ function renderPage(initialEntries: string[] = ['/attestations']) {
         </MemoryRouter>
       </ToastProvider>
     </AttestationsProvider>,
+import { describe, it, expect } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
+import Attestations from './Attestations'
+import { AttestationsProvider } from '../state/attestations'
+import type { RealtimeService } from '../services/realtime'
+
+const testRealtimeService: RealtimeService = {
+  subscribe: () => () => {},
+}
+
+function renderAttestations() {
+  return render(
+    <MemoryRouter>
+      <AttestationsProvider service={testRealtimeService}>
+        <Attestations />
+      </AttestationsProvider>
+    </MemoryRouter>,
   )
 }
 
@@ -244,5 +262,25 @@ describe('Attestations Page — pagination and filtering with 2,000 items', () =
     fireEvent.click(clearButtons[0])
 
     expect(screen.getAllByRole('link', { name: /view details/i }).length).toBeGreaterThanOrEqual(3)
+  it('renders the attestation progress and status history', () => {
+    renderAttestations()
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading).toBeInTheDocument()
+    expect(heading).toHaveTextContent('Attestations')
+    expect(screen.getByRole('region', { name: 'Attestation progress' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Attestation status timeline' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Start attestation' })).toBeInTheDocument()
+  })
+
+  it('shows realtime connection state and an empty status history', () => {
+    renderAttestations()
+    expect(screen.getByText('Realtime updates: offline')).toBeInTheDocument()
+    expect(screen.getByText('No status updates received yet.')).toBeInTheDocument()
+  })
+
+  it('displays the empty attestations state', () => {
+    renderAttestations()
+    expect(screen.getByRole('region', { name: 'Attestations empty state' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Run a revenue report' })).toHaveAttribute('href', '/')
   })
 })

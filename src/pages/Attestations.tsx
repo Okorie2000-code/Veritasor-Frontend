@@ -20,6 +20,9 @@ import {
   type ScheduleRule,
 } from '../store/scheduleStore'
 import { track } from '../analytics'
+import { Link } from 'react-router-dom'
+import AttestationProgress from '../components/AttestationProgress'
+import StatusTimeline from '../components/StatusTimeline'
 
 export const PAGE_SIZE = 50
 
@@ -893,6 +896,14 @@ export default function Attestations() {
         <header style={{ display: 'grid', gap: 'var(--density-row-gap)' }}>
           <h1 style={{ margin: 0 }}>Attestations</h1>
           <p
+      <AttestationProgress />
+      <StatusTimeline />
+
+      {attestations.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <section aria-label="Attestation history" style={{ marginTop: '1.75rem' }}>
+          <ol
             style={{
               color: 'var(--muted)',
               margin: 0,

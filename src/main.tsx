@@ -19,5 +19,6 @@ createRoot(rootElement).render(
     <EnvironmentProvider>
       <App />
     </EnvironmentProvider>
+    <App />
   </StrictMode>
 )

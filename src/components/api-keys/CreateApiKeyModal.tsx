@@ -565,3 +565,48 @@ export default function CreateApiKeyModal({
   )
 }
 
+import { useEffect, useMemo, useState } from 'react'
+const AVAILABLE_SCOPES = [
+  { id: 'read:attestations', label: 'Read attestations', description: 'View attestation history and on-chain proof details.' },
+  { id: 'write:attestations', label: 'Write attestations', description: 'Trigger attestations for revenue reports.' },
+  { id: 'read:sources', label: 'Read revenue sources', description: 'View connected revenue source metadata.' },
+type ScopeId = (typeof AVAILABLE_SCOPES)[number]['id']
+  onMinted: (keyId: string, fullKey: string) => void
+  const chosenScopes = useMemo(() => {
+    return AVAILABLE_SCOPES.filter((s) => selected.includes(s.id as ScopeId))
+      // reset for demo
+  function toggleScope(id: ScopeId) {
+  const keyId = useMemo(() => `key_${Math.random().toString(36).slice(2, 8)}`, [open])
+    const fullKey = `vtsr_live_${Math.random().toString(16).slice(2, 14)}${Math.random().toString(16).slice(2, 10)}_${Math.random().toString(16).slice(2, 6)}`
+    onMinted(keyId, fullKey)
+                    <legend style={{ fontWeight: 800, color: 'var(--text)' }}>Scopes</legend>
+                    <div style={{ display: 'grid', gap: '0.55rem' }}>
+                      {AVAILABLE_SCOPES.map((scope) => {
+                        const checked = selected.includes(scope.id as ScopeId)
+                        return (
+                          <label
+                            key={scope.id}
+                            style={{
+                              display: 'flex',
+                              gap: '0.75rem',
+                              alignItems: 'flex-start',
+                              padding: '0.8rem 0.9rem',
+                              borderRadius: 'var(--radius-sm)',
+                              border: '1px solid var(--border)',
+                              background: checked ? 'rgba(94, 234, 212, 0.08)' : 'rgba(15, 23, 42, 0.15)',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={() => toggleScope(scope.id as ScopeId)}
+                              aria-label={scope.label}
+                            />
+                            <span style={{ display: 'grid', gap: '0.15rem' }}>
+                              <strong style={{ color: 'var(--text)' }}>{scope.label}</strong>
+                              <span style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>{scope.description}</span>
+                            </span>
+                          </label>
+                        )
+                      })}
+        description={`This key will be created with ${chosenScopes.length} scope(s) and will expire in ${expiryDays} day(s).`}

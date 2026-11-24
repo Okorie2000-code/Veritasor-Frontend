@@ -325,3 +325,24 @@ export default function ApiKeys() {
     </div>
   )
 }
+  const [keys, setKeys] = useState<ApiKey[]>(INITIAL_KEYS)
+                <KeyRow
+                  key={key.id}
+                  keyItem={key}
+                  onCopyMasked={() => {}}
+                  mintedOnce={mintedOnce?.keyId === key.id ? mintedOnce.fullKey : null}
+                  onRotate={(id) => {
+                    setKeys((prev) =>
+                      prev.map((k) =>
+                        k.id === id
+                          ? { ...k, createdAt: new Date().toISOString(), maskedKey: 'vtsr_live_rotated…' }
+                          : k,
+                      ),
+                    )
+                    setMintedOnce(null)
+                  }}
+                  onRevoke={(id) => {
+                    setKeys((prev) => prev.map((k) => (k.id === id ? { ...k, status: 'revoked' } : k)))
+                    setMintedOnce(null)
+                  }}
+                />
