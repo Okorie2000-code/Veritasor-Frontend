@@ -8,9 +8,9 @@
     <script>
       (function() {
         var key = 'veritasor-theme';
-        var theme;
-        try { theme = localStorage.getItem(key); } catch(e) {}
-        theme = 'dark';
+        var stored;
+        try { stored = localStorage.getItem(key); } catch(e) {}
+        var theme = stored === 'high-contrast' ? 'high-contrast' : 'dark';
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
